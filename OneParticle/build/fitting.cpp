@@ -5,13 +5,15 @@
 #include "TLegend.h"
 #include "TCanvas.h"
 #include "TF1.h"
-
+#include "TFitResultPtr.h"
 void fitting()
 {
-    TFile *file = new TFile("OnlyA.root", "read");
+    TFile *file = new TFile("../../data/OnlyA.root", "read");
     TTree *tree = (TTree*) file -> Get("step");
     TGraph *graph = new TGraph();
-    TH1D *hist = new TH1D("X","A;x_position",500,-15,15);
+    TH1D *hist = new TH1D("X","A;x_position",100,-15,15);
+    TLegend* legend = new TLegend();
+
     Int_t eventID, volumeID, particleID;
     double_t rx,ry,rz;
     int count=1, nowEventID=0;
@@ -43,12 +45,18 @@ void fitting()
             amIdetected = false;
             nowEventID = eventID;
         } 
-    }
-
+    }   
     TF1 *gaus = new TF1("gs", "gaus", -15.0, 15.0);
     TCanvas *c1 = new TCanvas("c1");
     c1->SetLogy();
-    hist->Fit("gs");
     c1->Draw();
+    hist->Fit("gs");
+    TF1 *fitResult = hist->GetFunction("gs");
+    double chi2 = fitResult->GetChisquare();
+    double ndf = fitResult->GetNDF();
     hist->Draw();
+    TString a = Form("%f",chi2);
+    legend->AddEntry((TObject*)0,a,"");
+    legend->AddEntry((TObject*)0,TString::Itoa(ndf,10),"");
+    legend->Draw();
 }
