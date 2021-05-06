@@ -5,7 +5,7 @@
 #include "TLegend.h"
 void Read()
 {
-    TFile *file = new TFile("OnlyB.root", "read");
+    TFile *file = new TFile("Straight.root", "read");
     TTree *tree = (TTree*) file -> Get("step");
     TGraph *graph = new TGraph();
 

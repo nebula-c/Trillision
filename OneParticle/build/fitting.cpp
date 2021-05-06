@@ -8,7 +8,8 @@
 #include "TFitResultPtr.h"
 void fitting()
 {
-    TFile *file = new TFile("../../data/OnlyA.root", "read");
+    TFile *file = new TFile("../../data/OnlyB.root", "read");
+    //TFile *file = new TFile("Straight.root", "read");
     TTree *tree = (TTree*) file -> Get("step");
     TGraph *graph = new TGraph();
     TH1D *hist = new TH1D("X","A;x_position",100,-15,15);
@@ -18,7 +19,7 @@ void fitting()
     double_t rx,ry,rz;
     int count=1, nowEventID=0;
     bool amIdetected = false;
-    double_t centerX = -5;
+    double_t centerX = 0;       //for transition, but it's Unnecessary, maybe
 
     tree->SetBranchAddress("eventID",&eventID);
     tree->SetBranchAddress("volumeID",&volumeID);
@@ -45,18 +46,22 @@ void fitting()
             amIdetected = false;
             nowEventID = eventID;
         } 
-    }   
-    TF1 *gaus = new TF1("gs", "gaus", -15.0, 15.0);
+    }  
     TCanvas *c1 = new TCanvas("c1");
     c1->SetLogy();
     c1->Draw();
+
+    TF1 *gaus = new TF1("gs", "gaus", -15.0, 15.0);
     hist->Fit("gs");
+
     TF1 *fitResult = hist->GetFunction("gs");
-    double chi2 = fitResult->GetChisquare();
-    double ndf = fitResult->GetNDF();
+    double_t chi2 = fitResult->GetChisquare();
+    double_t ndf = fitResult->GetNDF();
+    
     hist->Draw();
-    TString a = Form("%f",chi2);
-    legend->AddEntry((TObject*)0,a,"");
+    TString chi2_ndf = Form("chi2/ndf : %f",chi2/ndf);
     legend->AddEntry((TObject*)0,TString::Itoa(ndf,10),"");
+    legend->AddEntry((TObject*)0,TString::Itoa(chi2,10),"");
+    legend->AddEntry((TObject*)0,chi2_ndf,"");
     legend->Draw();
 }
