@@ -1,6 +1,0 @@
-/gps/position  5 0 -5 mm
-/gps/direction -1 0 1
-/gps/particle  alpha
-/gps/energy    5.486 MeV
-
-/run/beamOn    10000
