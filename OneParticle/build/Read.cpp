@@ -5,13 +5,13 @@
 #include "TLegend.h"
 void Read()
 {
-    TFile *file = new TFile("Straight.root", "read");
+    TFile *file = new TFile("plane.root", "read");
     TTree *tree = (TTree*) file -> Get("step");
     TGraph *graph = new TGraph();
 
     Int_t eventID, volumeID, particleID;
     double_t rx,ry,rz;
-    int count=1, nowEventID=0;
+    int count=0, nowEventID=0;
     bool amIdetected = false;
 
     tree->SetBranchAddress("eventID",&eventID);
@@ -45,7 +45,7 @@ void Read()
         graph->SetMarkerColor(4);   //2(red) or 4(blue)
         graph->SetMarkerStyle(20);
         graph->SetMarkerSize(0.5);
-        graph->SetTitle("OnlyB;x(mm);y(mm)");
+        graph->SetTitle("no_target_plane;x(mm);y(mm)");
         TAxis *axis = graph->GetXaxis();
         axis->SetLimits(-15,15);
         graph->GetHistogram()->SetMaximum(7.5);

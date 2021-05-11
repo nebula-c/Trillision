@@ -3,7 +3,7 @@
 
 void specific()
 {
-    TFile *file = new TFile("OnlyA.root", "read");
+    TFile *file = new TFile("plane.root", "read");
     TTree *tree = (TTree*) file -> Get("step");
 
     Int_t eventID, volumeID, particleID;
@@ -23,9 +23,12 @@ void specific()
     {
         tree->GetEntry(i);
         
+        if(volumeID==1)
+        tree->Show(i);
+
         if(particleID!=57 && particleID!=284)
         {
-            tree->Show(i);
+            //tree->Show(i);
         }
     }
 }

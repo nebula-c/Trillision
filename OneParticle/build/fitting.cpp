@@ -8,11 +8,11 @@
 #include "TFitResultPtr.h"
 void fitting()
 {
-    TFile *file = new TFile("../../data/OnlyB.root", "read");
+    TFile *file = new TFile("plane.root", "read");
     //TFile *file = new TFile("Straight.root", "read");
     TTree *tree = (TTree*) file -> Get("step");
     TGraph *graph = new TGraph();
-    TH1D *hist = new TH1D("X","A;x_position",100,-15,15);
+    TH1D *hist = new TH1D("X","no_target_plane;x_position",100,-15,15);
     TLegend* legend = new TLegend();
 
     Int_t eventID, volumeID, particleID;
@@ -48,7 +48,7 @@ void fitting()
         } 
     }  
     TCanvas *c1 = new TCanvas("c1");
-    c1->SetLogy();
+    //c1->SetLogy();
     c1->Draw();
 
     TF1 *gaus = new TF1("gs", "gaus", -15.0, 15.0);
