@@ -6,6 +6,7 @@
 #include "TCanvas.h"
 #include "TF1.h"
 #include "TFitResultPtr.h"
+
 void fitting()
 {
     TFile *file = new TFile("plane.root", "read");
@@ -36,7 +37,7 @@ void fitting()
 
         if(volumeID == 1 && amIdetected == false && particleID == 57)   //if it's a first detect in step and it's a alpha
         {   
-            graph->SetPoint(graph->GetN(),(rx-centerX),ry);
+            //graph->SetPoint(graph->GetN(),(rx-centerX),ry);
             hist->Fill((rx-centerX));
             count++;            
             amIdetected = true;    

@@ -1,4 +1,4 @@
-#include "TPDetectorConstruction.hh"
+#include "OPDetectorConstruction.hh"
 
 
 #include "G4RunManager.hh"
@@ -8,6 +8,9 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
+
+#include "G4SubtractionSolid.hh"
+#include "G4MultiUnion.hh"
 
 #include "G4VisAttributes.hh"
 
@@ -19,31 +22,33 @@
 
 #include "G4RotationMatrix.hh"
 
-TPDetectorConstruction::TPDetectorConstruction()
+OPDetectorConstruction::OPDetectorConstruction()
 : G4VUserDetectorConstruction(){
 }
 
-TPDetectorConstruction::~TPDetectorConstruction()
+OPDetectorConstruction::~OPDetectorConstruction()
 {
 }
 
-G4VPhysicalVolume* TPDetectorConstruction::Construct()
+G4VPhysicalVolume* OPDetectorConstruction::Construct()
   {  
 
 // ----------------------------------------------------------- 
 // ------------------- Material Definitions ------------------
   //elements
-    // G4Element* elN = new G4Element("Nitrogen","N", 7., 14.007*g/mole);
-    // G4Element* elO = new G4Element("Oxygen","O", 8.,16.00*g/mole);
-    // G4Element* elSi = new G4Element ("Silicon","Si",14., 28.0855*g/mole);
+    G4Element* elN = new G4Element("Nitrogen","N", 7., 14.007*g/mole);
+    G4Element* elO = new G4Element("Oxygen","O", 8.,16.00*g/mole);
+    G4Element* elSi = new G4Element ("Silicon","Si",14., 28.0855*g/mole);
+    G4Element* elH = new G4Element("Hydrogen", "H", 1., 1.008*g/mole);
+    G4Element* elC = new G4Element("Carbon", "C" , 6., 12.011*g/mole);
 
   //define materials
     G4NistManager* nist = G4NistManager::Instance();
-    //G4Material* world_mat = new G4Material("rareAir", 1.20479e-7*mg/cm3, 2, kStateGas, 298.18*kelvin); // 공기밀도 1기압에서 1.18mg/cm3 -> 로터리펌프는 최대 10^-4 torr = 1.31578947e-7*atm
-    G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
-
-    /*
+    
     //world_mat
+    G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
+    /*
+    //G4Material* world_mat = new G4Material("rareAir", 1.20479e-7*mg/cm3, 2, kStateGas, 298.18*kelvin); // 공기밀도 1기압에서 1.18mg/cm3 -> 로터리펌프는 최대 10^-4 torr = 1.31578947e-7*atm
     world_mat->AddElement(elN, 70.0*perCent);
     world_mat->AddElement(elO, 30.0*perCent);
     */
@@ -53,6 +58,15 @@ G4VPhysicalVolume* TPDetectorConstruction::Construct()
 
     //target_mat = Au;
     G4Material* target_mat = nist->FindOrBuildMaterial("G4_Au");
+    
+    //collimator_mat
+    G4Material* PLA = new G4Material("Polylatic",1.3*g/cm3, 3);
+    
+    //PLA
+    G4int natoms;
+    PLA->AddElement(elC, natoms=3);
+    PLA->AddElement(elH, natoms=4);
+    PLA->AddElement(elO, natoms=2);
 
 // ------------------- Material Definitions end ------------------    
 // ---------------------------------------------------------------
@@ -81,6 +95,12 @@ G4VPhysicalVolume* TPDetectorConstruction::Construct()
     G4double target_length_x = 15.*mm;
     G4double target_length_y = 10.*mm;
     G4double target_thc = 1.*um;
+
+  //collimator parameters
+    G4double collimator_length_x = 180.*mm;
+    G4double collimator_length_y = 28.5*mm;
+    G4double collimator_thickness = 8*mm;  //collimator_thickness
+    
 
 // ------------------- Geometric variables end ----------------------- 
 // ------------------------------------------------------------------
@@ -134,8 +154,8 @@ G4VPhysicalVolume* TPDetectorConstruction::Construct()
     visDet->SetForceSolid();
     logicVacDetector->SetVisAttributes(visDet);
 
-  //---------------------------------------------------------
-  //--------------- Target(gold leaf)---------------------------------------
+    //---------------------------------------------------------
+    //--------------- Target(gold leaf)---------------------------------------
     G4Box* solidTarget =
       new G4Box("GoldLeaf",
                 target_length_x/2,
@@ -152,6 +172,40 @@ G4VPhysicalVolume* TPDetectorConstruction::Construct()
     visTarget->SetForceSolid();
     logicTarget->SetVisAttributes(visTarget);
 
+
+//------------------------- collimator --------------------------
+//-------------------------------------------------------------
+
+    auto solid_Pb_plate =
+      new G4Box("Pbplate",
+                    collimator_length_x/2,
+                    collimator_length_y/2,
+                    collimator_thickness/2);
+    
+    auto hole1 =
+      new G4Tubs("hole1",
+                  0,6.5*mm,3*mm,0,2*M_PI);
+
+    auto hole2 =
+      new G4Tubs("hole2",
+                  0,3.*mm,8.*mm,0,2*M_PI);
+
+    auto solidcollimator0 =
+      new G4SubtractionSolid("solidcollimator0", solid_Pb_plate, hole1, 0, G4ThreeVector(0,0,-4*mm));
+
+    auto solidcollimator =
+      new G4SubtractionSolid("solidcollimator", solidcollimator0, hole2, 0, G4ThreeVector(0,0,-1*mm));
+
+    auto logiccollimator =
+      new G4LogicalVolume(solidcollimator,
+                          PLA,
+                          "collimator");
+
+    G4VisAttributes* viscollimator = new G4VisAttributes();
+    viscollimator->SetColour(0.2,0.2,0.2);
+    viscollimator->SetForceSolid();
+    logiccollimator->SetVisAttributes(viscollimator);
+
 // ------------------- Definition of Geometry end -----------------------    
 // ------------------------------------------------------------------
   
@@ -162,14 +216,17 @@ G4VPhysicalVolume* TPDetectorConstruction::Construct()
   //position with fixed source position  
   // ***trf is for macro. We have to fix the center of source for convenience. So, transform is "-position of the center of source" 
     //G4ThreeVector sourcePosVec = G4ThreeVector(0., 0., -l-d)+trf; // Center of particle source
-    G4ThreeVector vacDet_posVec = G4ThreeVector(0,0,5.5*mm);
+    G4ThreeVector vacDet_posVec = G4ThreeVector(0,0,(5+target_thc/2)*mm);
     G4ThreeVector target_posVec = G4ThreeVector(0,0,0);
- 
-
+    //G4ThreeVector collimator_posVec = G4ThreeVector(0.,0.,-5-collimator_thickness/2-ALPIDE_thc); // If we set d=2, collimator is at the front of the gap. If we set d=3, collimator is at the center of the gap.
+    G4ThreeVector collimator_straight_posVec= G4ThreeVector(0,0,-10*mm);
+    G4ThreeVector collimatorA_posVec = G4ThreeVector(50*mm,0,-50*mm);
+    G4ThreeVector collimatorB_posVec = G4ThreeVector(-50*mm,0,-50*mm);
 // --------------------------------------------------------------- 
 // --------------------- Placements ----------------------------
     
-    //G4RotationMatrix *rot = new G4RotationMatrix(3.14159265/2,3.14159265/2,3.14159265/2);
+    G4RotationMatrix *rotA = new G4RotationMatrix(3.14159265/2,-3.14159265/4,-3.14159265/2);
+    G4RotationMatrix *rotB = new G4RotationMatrix(3.14159265/2,3.14159265/4,-3.14159265/2);
 
     new G4PVPlacement(0,
                   vacDet_posVec,
@@ -180,7 +237,6 @@ G4VPhysicalVolume* TPDetectorConstruction::Construct()
                   1,
                   true);
 
-
     new G4PVPlacement(0,
                   target_posVec,
                   logicTarget,
@@ -189,6 +245,33 @@ G4VPhysicalVolume* TPDetectorConstruction::Construct()
                   false,
                   2,
                   true);
+
+    // new G4PVPlacement(0,
+    //                   collimator_straight_posVec,
+    //                   logiccollimator,
+    //                   "collimator",
+    //                   logicWorld,
+    //                   true,
+    //                   3,
+    //                   true);
+
+    new G4PVPlacement(rotA,
+                      collimatorA_posVec,
+                      logiccollimator,
+                      "collimatorA",
+                      logicWorld,
+                      true,
+                      4,
+                      true);
+
+    new G4PVPlacement(rotB,
+                      collimatorB_posVec,
+                      logiccollimator,
+                      "collimatorB",
+                      logicWorld,
+                      true,
+                      5,
+                      true);
 
 return physWorld;
 }

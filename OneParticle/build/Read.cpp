@@ -5,7 +5,7 @@
 #include "TLegend.h"
 void Read()
 {
-    TFile *file = new TFile("plane.root", "read");
+    TFile *file = new TFile("OnlyA.root", "read");
     TTree *tree = (TTree*) file -> Get("step");
     TGraph *graph = new TGraph();
 
@@ -45,7 +45,7 @@ void Read()
         graph->SetMarkerColor(4);   //2(red) or 4(blue)
         graph->SetMarkerStyle(20);
         graph->SetMarkerSize(0.5);
-        graph->SetTitle("no_target_plane;x(mm);y(mm)");
+        graph->SetTitle("plane;x(mm);y(mm)");
         TAxis *axis = graph->GetXaxis();
         axis->SetLimits(-15,15);
         graph->GetHistogram()->SetMaximum(7.5);

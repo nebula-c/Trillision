@@ -2,8 +2,9 @@
 /gps/direction 0 0 1
 /gps/particle  alpha
 /gps/energy    5.486 MeV
+
 /gps/pos/type  Plane
 /gps/pos/shape Circle
 /gps/ang/type  iso
 
-/run/beamOn    10000
+/run/beamOn    100000

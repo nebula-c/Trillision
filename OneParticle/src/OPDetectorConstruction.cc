@@ -96,10 +96,10 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
     G4double target_length_y = 10.*mm;
     G4double target_thc = 1.*um;
 
-  //aperture parameters
-    G4double aperture_length_x = 180.*mm;
-    G4double aperture_length_y = 28.5*mm;
-    G4double aperture_thickness = 8*mm;  //aperture_thickness
+  //collimator parameters
+    G4double collimator_length_x = 180.*mm;
+    G4double collimator_length_y = 28.5*mm;
+    G4double collimator_thickness = 8*mm;  //collimator_thickness
     
 
 // ------------------- Geometric variables end ----------------------- 
@@ -173,14 +173,14 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
     logicTarget->SetVisAttributes(visTarget);
 
 
-//------------------------- aperture --------------------------
+//------------------------- collimator --------------------------
 //-------------------------------------------------------------
 
     auto solid_Pb_plate =
       new G4Box("Pbplate",
-                    aperture_length_x/2,
-                    aperture_length_y/2,
-                    aperture_thickness/2);
+                    collimator_length_x/2,
+                    collimator_length_y/2,
+                    collimator_thickness/2);
     
     auto hole1 =
       new G4Tubs("hole1",
@@ -190,21 +190,21 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
       new G4Tubs("hole2",
                   0,3.*mm,8.*mm,0,2*M_PI);
 
-    auto solidAperture0 =
-      new G4SubtractionSolid("solidAperture0", solid_Pb_plate, hole1, 0, G4ThreeVector(0,0,-4*mm));
+    auto solidcollimator0 =
+      new G4SubtractionSolid("solidcollimator0", solid_Pb_plate, hole1, 0, G4ThreeVector(0,0,-4*mm));
 
-    auto solidAperture =
-      new G4SubtractionSolid("solidAperture", solidAperture0, hole2, 0, G4ThreeVector(0,0,-1*mm));
+    auto solidcollimator =
+      new G4SubtractionSolid("solidcollimator", solidcollimator0, hole2, 0, G4ThreeVector(0,0,-1*mm));
 
-    auto logicAperture =
-      new G4LogicalVolume(solidAperture,
+    auto logiccollimator =
+      new G4LogicalVolume(solidcollimator,
                           PLA,
-                          "aperture");
+                          "collimator");
 
-    G4VisAttributes* visAperture = new G4VisAttributes();
-    visAperture->SetColour(0.2,0.2,0.2);
-    visAperture->SetForceSolid();
-    logicAperture->SetVisAttributes(visAperture);
+    G4VisAttributes* viscollimator = new G4VisAttributes();
+    viscollimator->SetColour(0.2,0.2,0.2);
+    viscollimator->SetForceSolid();
+    logiccollimator->SetVisAttributes(viscollimator);
 
 // ------------------- Definition of Geometry end -----------------------    
 // ------------------------------------------------------------------
@@ -218,12 +218,15 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
     //G4ThreeVector sourcePosVec = G4ThreeVector(0., 0., -l-d)+trf; // Center of particle source
     G4ThreeVector vacDet_posVec = G4ThreeVector(0,0,(5+target_thc/2)*mm);
     G4ThreeVector target_posVec = G4ThreeVector(0,0,0);
-    //G4ThreeVector aperture_posVec = G4ThreeVector(0.,0.,-5-aperture_thickness/2-ALPIDE_thc); // If we set d=2, aperture is at the front of the gap. If we set d=3, aperture is at the center of the gap.
-    G4ThreeVector aperture_posVec = G4ThreeVector(0,0,-(5+aperture_thickness/2)*mm);
+    //G4ThreeVector collimator_posVec = G4ThreeVector(0.,0.,-5-collimator_thickness/2-ALPIDE_thc); // If we set d=2, collimator is at the front of the gap. If we set d=3, collimator is at the center of the gap.
+    G4ThreeVector collimator_straight_posVec= G4ThreeVector(0,0,-10*mm);
+    G4ThreeVector collimatorA_posVec = G4ThreeVector(50*mm,0,-50*mm);
+    G4ThreeVector collimatorB_posVec = G4ThreeVector(-50*mm,0,-50*mm);
 // --------------------------------------------------------------- 
 // --------------------- Placements ----------------------------
     
-    //G4RotationMatrix *rot = new G4RotationMatrix(3.14159265/2,3.14159265/2,3.14159265/2);
+    G4RotationMatrix *rotA = new G4RotationMatrix(3.14159265/2,-3.14159265/4,-3.14159265/2);
+    G4RotationMatrix *rotB = new G4RotationMatrix(3.14159265/2,3.14159265/4,-3.14159265/2);
 
     new G4PVPlacement(0,
                   vacDet_posVec,
@@ -234,23 +237,40 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
                   1,
                   true);
 
+    new G4PVPlacement(0,
+                  target_posVec,
+                  logicTarget,
+                  "GoldLeaf",
+                  logicWorld,
+                  false,
+                  2,
+                  true);
 
     // new G4PVPlacement(0,
-    //               target_posVec,
-    //               logicTarget,
-    //               "GoldLeaf",
-    //               logicWorld,
-    //               false,
-    //               2,
-    //               true);
+    //                   collimator_straight_posVec,
+    //                   logiccollimator,
+    //                   "collimator",
+    //                   logicWorld,
+    //                   true,
+    //                   3,
+    //                   true);
 
-    new G4PVPlacement(0,
-                      aperture_posVec,
-                      logicAperture,
-                      "aperture",
+    new G4PVPlacement(rotA,
+                      collimatorA_posVec,
+                      logiccollimator,
+                      "collimatorA",
                       logicWorld,
                       true,
-                      6,
+                      4,
+                      true);
+
+    new G4PVPlacement(rotB,
+                      collimatorB_posVec,
+                      logiccollimator,
+                      "collimatorB",
+                      logicWorld,
+                      true,
+                      5,
                       true);
 
 return physWorld;
