@@ -986,6 +986,20 @@ G4BlockingList.icc
 
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4BlockingList.icc
 
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4BooleanSolid.hh
+G4DisplacedSolid.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4DisplacedSolid.hh
+G4ThreeVector.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4ThreeVector.hh
+G4RotationMatrix.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4RotationMatrix.hh
+G4Transform3D.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Transform3D.hh
+G4BooleanSolid.icc
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4BooleanSolid.icc
+
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4BooleanSolid.icc
+
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4BoundingEnvelope.hh
 vector
 -
@@ -1197,6 +1211,18 @@ G4VModelFactory.hh
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VModelFactory.hh
 G4VDigi.hh
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VDigi.hh
+
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4DisplacedSolid.hh
+G4VSolid.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VSolid.hh
+G4RotationMatrix.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4RotationMatrix.hh
+G4ThreeVector.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4ThreeVector.hh
+G4Transform3D.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Transform3D.hh
+G4AffineTransform.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4AffineTransform.hh
 
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4DsMesonMinus.hh
 globals.hh
@@ -2129,6 +2155,24 @@ G4ModelingParameters.icc
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4ModelingParameters.icc
 
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4ModelingParameters.icc
+
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4MultiUnion.hh
+vector
+-
+G4VSolid.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VSolid.hh
+G4ThreeVector.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4ThreeVector.hh
+G4Transform3D.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Transform3D.hh
+G4Point3D.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Point3D.hh
+G4Vector3D.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Vector3D.hh
+G4SurfBits.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4SurfBits.hh
+G4Voxelizer.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Voxelizer.hh
 
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4MuonMinus.hh
 globals.hh
@@ -3688,6 +3732,26 @@ G4String.icc
 
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4String.icc
 
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4SubtractionSolid.hh
+G4BooleanSolid.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4BooleanSolid.hh
+G4VSolid.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VSolid.hh
+G4RotationMatrix.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4RotationMatrix.hh
+G4ThreeVector.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4ThreeVector.hh
+G4Transform3D.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Transform3D.hh
+G4AffineTransform.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4AffineTransform.hh
+
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4SurfBits.hh
+cstring
+-
+G4Types.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Types.hh
+
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4SystemOfUnits.hh
 CLHEP/Units/SystemOfUnits.h
 -
@@ -4297,6 +4361,18 @@ G4ios.hh
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4ios.hh
 G4VProcess.hh
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VProcess.hh
+
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VFacet.hh
+iostream
+-
+vector
+-
+globals.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/globals.hh
+G4ThreeVector.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4ThreeVector.hh
+G4VSolid.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VSolid.hh
 
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VFileManager.hh
 G4BaseFileManager.hh
@@ -4949,6 +5025,30 @@ G4VoxelNavigation.icc
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VoxelNavigation.icc
 
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VoxelNavigation.icc
+
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Voxelizer.hh
+vector
+-
+string
+-
+map
+-
+G4Transform3D.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Transform3D.hh
+G4RotationMatrix.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4RotationMatrix.hh
+G4SurfBits.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4SurfBits.hh
+G4Box.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Box.hh
+G4VFacet.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VFacet.hh
+G4VSolid.hh
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4VSolid.hh
+G4Voxelizer.icc
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Voxelizer.icc
+
+/Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4Voxelizer.icc
 
 /Users/Shared/opt/geant4/geant4.10.04.p01-install/include/Geant4/G4XiMinus.hh
 globals.hh
@@ -5987,6 +6087,10 @@ G4PVPlacement.hh
 /Users/schoi/Documents/Trillision/TwoParticles/src/G4PVPlacement.hh
 G4SystemOfUnits.hh
 /Users/schoi/Documents/Trillision/TwoParticles/src/G4SystemOfUnits.hh
+G4SubtractionSolid.hh
+/Users/schoi/Documents/Trillision/TwoParticles/src/G4SubtractionSolid.hh
+G4MultiUnion.hh
+/Users/schoi/Documents/Trillision/TwoParticles/src/G4MultiUnion.hh
 G4VisAttributes.hh
 /Users/schoi/Documents/Trillision/TwoParticles/src/G4VisAttributes.hh
 G4GeometryManager.hh

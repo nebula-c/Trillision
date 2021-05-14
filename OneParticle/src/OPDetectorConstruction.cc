@@ -240,14 +240,14 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
                   1,
                   true);
 
-    // new G4PVPlacement(0,
-    //               target_posVec,
-    //               logicTarget,
-    //               "GoldLeaf",
-    //               logicWorld,
-    //               false,
-    //               2,
-    //               true);
+    new G4PVPlacement(0,
+                  target_posVec,
+                  logicTarget,
+                  "GoldLeaf",
+                  logicWorld,
+                  false,
+                  2,
+                  true);
 
     new G4PVPlacement(0,
                       collimator_straight_posVec,

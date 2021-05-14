@@ -1,4 +1,4 @@
-#include "OPDetectorConstruction.hh"
+#include "TPDetectorConstruction.hh"
 
 
 #include "G4RunManager.hh"
@@ -22,15 +22,15 @@
 
 #include "G4RotationMatrix.hh"
 
-OPDetectorConstruction::OPDetectorConstruction()
+TPDetectorConstruction::TPDetectorConstruction()
 : G4VUserDetectorConstruction(){
 }
 
-OPDetectorConstruction::~OPDetectorConstruction()
+TPDetectorConstruction::~TPDetectorConstruction()
 {
 }
 
-G4VPhysicalVolume* OPDetectorConstruction::Construct()
+G4VPhysicalVolume* TPDetectorConstruction::Construct()
   {  
 
 // ----------------------------------------------------------- 
@@ -220,8 +220,8 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
     G4ThreeVector target_posVec = G4ThreeVector(0,0,0);
     //G4ThreeVector collimator_posVec = G4ThreeVector(0.,0.,-5-collimator_thickness/2-ALPIDE_thc); // If we set d=2, collimator is at the front of the gap. If we set d=3, collimator is at the center of the gap.
     G4ThreeVector collimator_straight_posVec= G4ThreeVector(0,0,-10*mm);
-    G4ThreeVector collimatorA_posVec = G4ThreeVector(50*mm,0,-50*mm);
-    G4ThreeVector collimatorB_posVec = G4ThreeVector(-50*mm,0,-50*mm);
+    G4ThreeVector collimatorA_posVec = G4ThreeVector(70*mm,0,-70*mm);
+    G4ThreeVector collimatorB_posVec = G4ThreeVector(-70*mm,0,-70*mm);
 // --------------------------------------------------------------- 
 // --------------------- Placements ----------------------------
     
