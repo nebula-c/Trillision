@@ -46,9 +46,10 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
     G4NistManager* nist = G4NistManager::Instance();
     
     //world_mat
-    G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
+    G4Material* world_mat = new G4Material("rareAir", 9.29e-3*mg/cm3, 2, kStateGas, 298.18*kelvin); // 공기밀도 1기압에서 1.18mg/cm3 -> 로터리펌프는 최대 10^-4 torr = 1.31578947e-7*atm
+    
     /*
-    //G4Material* world_mat = new G4Material("rareAir", 1.20479e-7*mg/cm3, 2, kStateGas, 298.18*kelvin); // 공기밀도 1기압에서 1.18mg/cm3 -> 로터리펌프는 최대 10^-4 torr = 1.31578947e-7*atm
+    G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
     world_mat->AddElement(elN, 70.0*perCent);
     world_mat->AddElement(elO, 30.0*perCent);
     */
