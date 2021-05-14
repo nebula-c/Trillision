@@ -13,7 +13,7 @@ void fitting()
     //TFile *file = new TFile("Straight.root", "read");
     TTree *tree = (TTree*) file -> Get("step");
     TGraph *graph = new TGraph();
-    TH1D *hist = new TH1D("X","no_target_plane;x_position",100,-15,15);
+    TH1D *hist = new TH1D("X","no target ;x_position",100,-15,15);
     TLegend* legend = new TLegend();
 
     Int_t eventID, volumeID, particleID;
@@ -53,16 +53,24 @@ void fitting()
     c1->Draw();
 
     TF1 *gaus = new TF1("gs", "gaus", -15.0, 15.0);
-    hist->Fit("gs");
+    TF1 *func = new TF1("func", "[0]*cos([1]*x+[2])", -10, 10);
+    hist->Fit("func","","",-10,10);
+    hist->Draw();
 
-    TF1 *fitResult = hist->GetFunction("gs");
+    TF1 *fitResult = hist->GetFunction("func");
     double_t chi2 = fitResult->GetChisquare();
     double_t ndf = fitResult->GetNDF();
     
-    hist->Draw();
     TString chi2_ndf = Form("chi2/ndf : %f",chi2/ndf);
-    legend->AddEntry((TObject*)0,TString::Itoa(ndf,10),"");
-    legend->AddEntry((TObject*)0,TString::Itoa(chi2,10),"");
+    TString f = Form("[p0]*cos([p1]*x+[p2])");
+    TString p0 = Form("p0 : %f",hist->GetFunction("func")->GetParameter(0));
+    TString p1 = Form("p1 : %f",hist->GetFunction("func")->GetParameter(1));
+    TString p2 = Form("p2 : %f",hist->GetFunction("func")->GetParameter(2));
+    
+    legend->AddEntry((TObject*)0,f,"");
+    legend->AddEntry((TObject*)0,p0,"");
+    legend->AddEntry((TObject*)0,p1,"");
+    legend->AddEntry((TObject*)0,p2,"");
     legend->AddEntry((TObject*)0,chi2_ndf,"");
     legend->Draw();
 }

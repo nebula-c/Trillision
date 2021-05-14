@@ -47,12 +47,14 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
     
     //world_mat
     G4Material* world_mat = new G4Material("rareAir", 9.29e-3*mg/cm3, 2, kStateGas, 298.18*kelvin); // 공기밀도 1기압에서 1.18mg/cm3 -> 로터리펌프는 최대 10^-4 torr = 1.31578947e-7*atm
+    //G4Material* world_mat = new G4Material("rareAir", 1.20479e-7*mg/cm3, 2, kStateGas, 298.18*kelvin); // 공기밀도 1기압에서 1.18mg/cm3 -> 로터리펌프는 최대 10^-4 torr = 1.31578947e-7*atm
     
-    /*
-    G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
+    //G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
+    
+    
     world_mat->AddElement(elN, 70.0*perCent);
     world_mat->AddElement(elO, 30.0*perCent);
-    */
+    
 
     //vacDet_mat = SiO2;
     G4Material* vacDet_mat = nist->FindOrBuildMaterial("G4_Galactic");
@@ -238,41 +240,41 @@ G4VPhysicalVolume* OPDetectorConstruction::Construct()
                   1,
                   true);
 
-    new G4PVPlacement(0,
-                  target_posVec,
-                  logicTarget,
-                  "GoldLeaf",
-                  logicWorld,
-                  false,
-                  2,
-                  true);
-
     // new G4PVPlacement(0,
-    //                   collimator_straight_posVec,
+    //               target_posVec,
+    //               logicTarget,
+    //               "GoldLeaf",
+    //               logicWorld,
+    //               false,
+    //               2,
+    //               true);
+
+    new G4PVPlacement(0,
+                      collimator_straight_posVec,
+                      logiccollimator,
+                      "collimator",
+                      logicWorld,
+                      true,
+                      3,
+                      true);
+
+    // new G4PVPlacement(rotA,
+    //                   collimatorA_posVec,
     //                   logiccollimator,
-    //                   "collimator",
+    //                   "collimatorA",
     //                   logicWorld,
     //                   true,
-    //                   3,
+    //                   4,
     //                   true);
 
-    new G4PVPlacement(rotA,
-                      collimatorA_posVec,
-                      logiccollimator,
-                      "collimatorA",
-                      logicWorld,
-                      true,
-                      4,
-                      true);
-
-    new G4PVPlacement(rotB,
-                      collimatorB_posVec,
-                      logiccollimator,
-                      "collimatorB",
-                      logicWorld,
-                      true,
-                      5,
-                      true);
+    // new G4PVPlacement(rotB,
+    //                   collimatorB_posVec,
+    //                   logiccollimator,
+    //                   "collimatorB",
+    //                   logicWorld,
+    //                   true,
+    //                   5,
+    //                   true);
 
 return physWorld;
 }

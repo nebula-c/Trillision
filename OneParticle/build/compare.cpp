@@ -26,8 +26,8 @@ void compare()
     nt.hist = new TH1D("nt","compare;x_position",100,-15,15);
     TGraph *g1 = new TGraph();
     TCanvas *c1 = new TCanvas("c1","compare",800,650);
-    TPad *pad1 = new TPad("pad1","pad1",0.05,0.52,0.95,0.97);
-    TPad *pad2 = new TPad("pad1","pad1",0.05,0.02,0.95,0.47);
+    //TPad *pad1 = new TPad("pad1","pad1",0.05,0.52,0.95,0.97);
+    //TPad *pad2 = new TPad("pad1","pad1",0.05,0.02,0.95,0.47);
 
 
     TLegend* legend = new TLegend();
@@ -36,7 +36,7 @@ void compare()
     TFile *file_plane = new TFile("plane.root", "read");
     plane.tree = (TTree*) file_plane -> Get("step");
 
-    TFile *file_nt = new TFile("no_target_plane.root", "read");
+    TFile *file_nt = new TFile("no_target.root", "read");
     nt.tree = (TTree*) file_nt -> Get("step");
 
 
@@ -67,19 +67,20 @@ void compare()
         g1->SetPoint(i,-15+i*0.3,plane.hist->GetBinContent(i)-nt.hist->GetBinContent(i));
     }
     c1->Draw();
-    pad1->Draw();
-    pad2->Draw();
-    pad1->cd();
-    plane.hist->SetLineColor(2);
-    plane.hist->Draw();
+    //pad1->Draw();
+    //pad2->Draw();
+    //pad1->cd();
+    
     nt.hist->SetLineColor(4);
-    nt.hist->Draw("SAME");
-    pad2->cd();
-    g1->Draw();
+    nt.hist->Draw();
+    plane.hist->SetLineColor(2);
+    plane.hist->Draw("SAME");
+    //pad2->cd();
+    //g1->Draw();
 
     legend->AddEntry(plane.hist,"plane","l");
     legend->AddEntry(nt.hist,"no target","l");
-    legend->AddEntry(g1,"sub","l");
+    //legend->AddEntry(g1,"sub","l");
 
     legend->Draw();
 }
